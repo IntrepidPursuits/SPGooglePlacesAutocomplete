@@ -23,7 +23,27 @@ NSString *SPBooleanStringForBool(BOOL boolean) {
 }
 
 NSString *SPPlaceTypeStringForPlaceType(SPGooglePlacesAutocompletePlaceType type) {
-    return (type == SPPlaceTypeGeocode) ? @"geocode" : @"establishment";
+
+    NSString *typeString;
+    
+    switch (type) {
+        case SPPlaceTypeGeocode:
+            typeString = @"geocode";
+            break;
+        case SPPlaceTypeCities:
+            typeString = @"(cities)";
+            break;
+        case SPPlaceTypeEstablishment:
+            typeString = @"establishment";
+            break;
+        case SPPlaceTypeRegions:
+            typeString = @"(regions)";
+            break;
+        default:
+            break;
+    }
+    
+    return typeString;
 }
 
 BOOL SPEnsureGoogleAPIKey() {
@@ -32,7 +52,6 @@ BOOL SPEnsureGoogleAPIKey() {
         userHasProvidedAPIKey = NO;
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"API Key Needed" message:@"Please replace kGoogleAPIKey with your Google API key." delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
         [alert show];
-        [alert release];
     }
     return userHasProvidedAPIKey;
 }
@@ -40,7 +59,6 @@ BOOL SPEnsureGoogleAPIKey() {
 void SPPresentAlertViewWithErrorAndTitle(NSError *error, NSString *title) {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:[error localizedDescription] delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
     [alert show];
-    [alert release];
 }
 
 extern BOOL SPIsEmptyString(NSString *string) {

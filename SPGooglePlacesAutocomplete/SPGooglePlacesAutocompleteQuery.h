@@ -55,6 +55,9 @@
  */
 @property (nonatomic) CLLocationCoordinate2D location;
 
+//Specifies whether or not to use the location property
+@property (nonatomic) BOOL useCoordinateLocation;
+
 /*!
  The distance (in meters) within which to return Place results. Note that setting a radius biases results to the indicated area, but may not fully restrict results to the specified area.
  */

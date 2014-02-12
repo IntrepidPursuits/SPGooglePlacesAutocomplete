@@ -6,14 +6,16 @@
 //  Copyright (c) 2012 Stephen Poletto. All rights reserved.
 //
 
-#define kGoogleAPIKey @"YOUR_API_KEY"
+#define kGoogleAPIKey @"KEY_GOES_HERE"
 #define kGoogleAPINSErrorCode 42
 
 @class CLPlacemark;
 
 typedef enum {
     SPPlaceTypeGeocode = 0,
-    SPPlaceTypeEstablishment
+    SPPlaceTypeEstablishment,
+    SPPlaceTypeCities,
+    SPPlaceTypeRegions
 } SPGooglePlacesAutocompletePlaceType;
 
 typedef void (^SPGooglePlacesPlacemarkResultBlock)(CLPlacemark *placemark, NSString *addressString, NSError *error);

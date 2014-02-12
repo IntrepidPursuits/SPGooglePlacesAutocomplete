@@ -21,7 +21,7 @@
 @synthesize name, reference, identifier, type;
 
 + (SPGooglePlacesAutocompletePlace *)placeFromDictionary:(NSDictionary *)placeDictionary {
-    SPGooglePlacesAutocompletePlace *place = [[[self alloc] init] autorelease];
+    SPGooglePlacesAutocompletePlace *place = [[self alloc] init];
     place.name = [placeDictionary objectForKey:@"description"];
     place.reference = [placeDictionary objectForKey:@"reference"];
     place.identifier = [placeDictionary objectForKey:@"id"];
@@ -79,14 +79,6 @@
     } else {
         [self resolveEstablishmentPlaceToPlacemark:block];
     }
-}
-
-- (void)dealloc {
-    [name release];
-    [reference release];
-    [identifier release];
-    [geocoder release];
-    [super dealloc];
 }
 
 @end

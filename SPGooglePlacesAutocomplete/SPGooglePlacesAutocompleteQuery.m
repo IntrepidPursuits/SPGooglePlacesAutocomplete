@@ -15,10 +15,10 @@
 
 @implementation SPGooglePlacesAutocompleteQuery
 
-@synthesize input, sensor, key, offset, location, radius, language, types, resultBlock;
+@synthesize input, sensor, key, offset, location, radius, language, types, resultBlock, useCoordinateLocation;
 
 + (SPGooglePlacesAutocompleteQuery *)query {
-    return [[[self alloc] init] autorelease];
+    return [[self alloc] init];
 }
 
 - (id)init {
@@ -39,15 +39,6 @@
     return [NSString stringWithFormat:@"Query URL: %@", [self googleURLString]];
 }
 
-- (void)dealloc {
-    [googleConnection release];
-    [responseData release];
-    [input release];
-    [key release];
-    [language release];
-    [super dealloc];
-}
-
 - (NSString *)googleURLString {
     NSMutableString *url = [NSMutableString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%@&sensor=%@&key=%@",
                                                              [input stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
@@ -55,7 +46,7 @@
     if (offset != NSNotFound) {
         [url appendFormat:@"&offset=%u", offset];
     }
-    if (location.latitude != -1) {
+    if (useCoordinateLocation && location.latitude != -1) {
         [url appendFormat:@"&location=%f,%f", location.latitude, location.longitude];
     }
     if (radius != NSNotFound) {
@@ -71,8 +62,6 @@
 }
 
 - (void)cleanup {
-    [googleConnection release];
-    [responseData release];
     googleConnection = nil;
     responseData = nil;
     self.resultBlock = nil;
